@@ -5,6 +5,13 @@ on:
   push:
     branches:
       - main
+      - feat/ci-cd
+    paths:
+      - 'apps/server/**'
+
+  pull_request:
+    branches:
+      - main
     paths:
       - 'apps/server/**'
 
@@ -22,8 +29,9 @@ jobs:
           host: ${{ secrets.EC2_HOST }}
           username: ${{ secrets.EC2_USERNAME }}
           key: ${{ secrets.EC2_KEY }}
-          source: apps/server/*
+          source: apps/server/**
           target: /home/ubuntu/mediasoup-server/
+          strip_components: 2
 
       - name: SSH and build/start server
         uses: appleboy/ssh-action@v1.0.0

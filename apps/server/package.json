@@ -5,8 +5,8 @@
   "main": "src/index.ts",
   "scripts": {
     "dev": "tsx src/index.ts",
-    "build": "tsc",
-    "start": "ts-node -r tsconfig-paths/register dist/index.js"
+    "build": "ttsc",
+    "start": "node dist/index.js"
   },
   "dependencies": {
     "@types/ws": "^8.18.0",

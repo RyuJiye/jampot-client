@@ -30,7 +30,7 @@ jobs:
           username: ${{ secrets.EC2_USERNAME }}
           key: ${{ secrets.EC2_KEY }}
           source: apps/server/**
-          target: /home/ubuntu/mediasoup-server/
+          target: /home/ubuntu/server/
           strip_components: 2
 
       - name: SSH and build/start server
@@ -40,7 +40,7 @@ jobs:
           username: ${{ secrets.EC2_USERNAME }}
           key: ${{ secrets.EC2_KEY }}
           script: |
-            cd /home/ubuntu/mediasoup-server
+            cd /home/ubuntu/server
             npm install --legacy-peer-deps
             npm run build
             pm2 restart mediasoup || pm2 start dist/index.js --name mediasoup

@@ -43,4 +43,4 @@ jobs:
             cd /home/ubuntu/server
             npm install --legacy-peer-deps
             npm run build
-            pm2 restart mediasoup || pm2 start dist/index.js --name mediasoup --interpreter node --interpreter-args="--input-type=module"
+            pm2 restart mediasoup || pm2 start dist/index.js --name mediasoup --interpreter ts-node --interpreter-args="-r tsconfig-paths/register"

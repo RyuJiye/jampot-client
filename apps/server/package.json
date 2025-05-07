@@ -18,7 +18,7 @@
     "ws": "^8.18.1"
   },
   "devDependencies": {
-    "ts-node": "^10.9.2"
+    "ts-node": "^10.9.2",
     "tsconfig-paths": "^3.12.0"
   }
 }

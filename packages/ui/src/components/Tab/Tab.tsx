@@ -33,6 +33,7 @@ export const Tab = <T extends string>({
 const TabWrapper = styled.div`
   display: flex;
   border-bottom: 4px solid ${({ theme }) => theme.palette.gray100};
+  width: 100%;
 `;
 
 const TabButton = styled.button<{ isActive: boolean }>`

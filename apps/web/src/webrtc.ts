@@ -6,6 +6,7 @@ interface WebRTCOptions {
   onTrack: (userId: string, stream: MediaStream) => void;
   onPeerList: (peers: { id: string; name: string; role: string }[]) => void;
   userInfo: { id: string; name: string; role: string };
+  roomId: string;
 }
 
 export const startWebRTC = ({
@@ -14,6 +15,7 @@ export const startWebRTC = ({
   onTrack,
   onPeerList,
   userInfo,
+  roomId,
 }: WebRTCOptions) => {
   const socket = new WebSocket('ws://localhost:4000');
   let device: Device;
@@ -23,7 +25,7 @@ export const startWebRTC = ({
   socket.onopen = () => {
     onLog('WebSocket 연결됨');
     onConnect();
-    socket.send(JSON.stringify({ type: 'join', userInfo }));
+    socket.send(JSON.stringify({ type: 'join', userInfo, roomId }));
     setTimeout(() => {
       socket.send(JSON.stringify({ type: 'getRouterRtpCapabilities' }));
     }, 100);
@@ -54,7 +56,6 @@ export const startWebRTC = ({
         socket.send(
           JSON.stringify({
             type: 'produce',
-            userId: userInfo.id,
             kind,
             rtpParameters,
           })
@@ -80,7 +81,6 @@ export const startWebRTC = ({
       socket.send(
         JSON.stringify({
           type: 'consume',
-          userId: userInfo.id,
           rtpCapabilities: device.rtpCapabilities,
         })
       );
@@ -111,7 +111,6 @@ export const startWebRTC = ({
           socket.send(
             JSON.stringify({
               type: 'consume',
-              userId: userInfo.id,
               rtpCapabilities: device.rtpCapabilities,
             })
           );

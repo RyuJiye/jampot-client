@@ -4,19 +4,19 @@ import { Chip } from '../Chip/Chip';
 import { Icon } from '../Icon/Icon';
 
 export type SessionCardProps = React.ComponentProps<'div'> & {
-  imageUrl: string;
-  userName: string;
-  userDescription: string;
-  tags: string[];
+  profileImgUrl: string;
+  nickName: string;
+  selfIntroduction: string;
+  sessionList: string[];
   isLiked: boolean;
   onLike: () => void;
 };
 
 export const SessionCard = ({
-  imageUrl,
-  userName,
-  userDescription,
-  tags,
+  profileImgUrl,
+  nickName,
+  selfIntroduction,
+  sessionList,
   isLiked,
   onLike,
 }: SessionCardProps) => {
@@ -25,7 +25,7 @@ export const SessionCard = ({
   return (
     <CardContainer>
       <ImageContainer>
-        <ProfileImage src={imageUrl} alt="profile" />
+        <ProfileImage src={profileImgUrl} alt="profile" />
         <LikeButton onClick={onLike}>
           <Icon
             name="heart"
@@ -34,7 +34,7 @@ export const SessionCard = ({
           />
         </LikeButton>
         <TagList>
-          {tags.map((tag) => (
+          {sessionList.map((tag) => (
             <Chip key={tag} colorTheme={'yellow'}>
               {tag}
             </Chip>
@@ -42,8 +42,8 @@ export const SessionCard = ({
         </TagList>
       </ImageContainer>
       <UserInfo>
-        <UserName>{userName}</UserName>
-        <UserDescription>{userDescription}</UserDescription>
+        <NickName>{nickName}</NickName>
+        <SelfIntroduction>{selfIntroduction}</SelfIntroduction>
       </UserInfo>
     </CardContainer>
   );
@@ -103,12 +103,12 @@ const UserInfo = styled.div`
   gap: 4px;
 `;
 
-const UserName = styled.div`
+const NickName = styled.div`
   ${({ theme }) => theme.typo.body1m};
   color: ${({ theme }) => theme.palette.yellow800};
 `;
 
-const UserDescription = styled.div`
+const SelfIntroduction = styled.div`
   ${({ theme }) => theme.typo.label1r};
   color: ${({ theme }) => theme.palette.gray900};
   display: -webkit-box;

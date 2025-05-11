@@ -31,19 +31,10 @@ export const Header = () => {
             {item.menu}
           </MenuButton>
         ))}
-        {loggedIn ? (
-          <UserButton>
-            <Icon name="person" size={18} />
-          </UserButton>
-        ) : (
-          <MenuButton
-            filled
-            width="100px"
-            onClick={() => setLoggedIn((prev) => !prev)}
-          >
-            로그인
-          </MenuButton>
-        )}
+
+        <UserButton>
+          <Icon name="person" size={18} />
+        </UserButton>
       </Menu>
     </Headers>
   );

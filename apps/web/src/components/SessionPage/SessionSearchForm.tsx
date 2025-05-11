@@ -1,70 +1,35 @@
 import styled from '@emotion/styled';
-import { useEffect, useState } from 'react';
 import { ButtonTextField, Dropdown, SessionCard } from '@repo/ui';
-import {
-  GENRES,
-  SESSION_LABEL_TO_VALUE,
-  SESSION_LABELS,
-} from '@web/constants/onboarding';
-import {
-  SessionList,
-  UserProfile,
-} from '@web/components/SessionPage/SessionList';
+import { SESSION_LABELS, GENRES } from '@web/constants/onboarding';
+import { useSessionSearch } from '@web/hooks/Session/useSessionSearch';
+import { useToggleLike } from '@web/hooks/Session/useToggleLike';
 
 export const SessionSearchForm = () => {
-  const [inputValue, setInputValue] = useState('');
-  const [selectedSessions, setSelectedSessions] = useState<string[]>([]);
-  const [selectedGenres, setSelectedGenres] = useState<string[]>([]);
-  const [userList, setUserList] = useState<UserProfile[]>([]);
+  const {
+    inputValue,
+    setInputValue,
+    selectedSessions,
+    setSelectedSessions,
+    selectedGenres,
+    setSelectedGenres,
+    userList,
+    handleSearch,
+  } = useSessionSearch();
 
-  const handleSearch = async () => {
-    const sessionQuery = selectedSessions
-      .map(
-        (label) =>
-          SESSION_LABEL_TO_VALUE[label as keyof typeof SESSION_LABEL_TO_VALUE]
-      )
-      .filter(
-        (
-          val
-        ): val is (typeof SESSION_LABEL_TO_VALUE)[keyof typeof SESSION_LABEL_TO_VALUE] =>
-          typeof val === 'string'
-      );
-
-    const result = await SessionList({
-      nickname: inputValue,
-      sessionList: sessionQuery,
-      genreList: selectedGenres,
-    });
-
-    setUserList(result);
-  };
-
-  useEffect(() => {
-    handleSearch();
-  }, []);
-
-  useEffect(() => {
-    handleSearch();
-  }, [inputValue, selectedSessions, selectedGenres]);
-
-  const toggleLike = (userId: number) => {
-    setUserList((prev) =>
-      prev.map((user) =>
-        user.userId === userId ? { ...user, isLiked: !user.isLiked } : user
-      )
-    );
-  };
+  const { toggleLike } = useToggleLike();
 
   return (
     <>
       <FormHeader>
-        <ButtonTextField
-          placeholder="입력하세요"
-          value={inputValue}
-          onChange={(e) => setInputValue(e.target.value)}
-          buttonText="전송"
-          buttonClickHandler={handleSearch}
-        />
+        <SearchContainer>
+          <ButtonTextField
+            placeholder="입력하세요"
+            value={inputValue}
+            onChange={(e) => setInputValue(e.target.value)}
+            buttonText="전송"
+            buttonClickHandler={handleSearch}
+          />
+        </SearchContainer>
         <Dropdowns>
           <Dropdown
             title="세션 선택"
@@ -90,7 +55,12 @@ export const SessionSearchForm = () => {
             selfIntroduction={user.selfIntroduction}
             sessionList={user.sessionList}
             isLiked={user.isLiked}
-            onLike={() => toggleLike(user.userId)}
+            onLike={() =>
+              toggleLike(user.userId, user.isLiked, () => {
+                // 바로 반영
+                handleSearch();
+              })
+            }
           />
         ))}
       </FormContent>
@@ -117,4 +87,9 @@ const FormContent = styled.div`
   flex-wrap: wrap;
   gap: 16px;
   margin-top: 24px;
+`;
+
+const SearchContainer = styled.div`
+  display: flex;
+  flex-shrink: 0;
 `;

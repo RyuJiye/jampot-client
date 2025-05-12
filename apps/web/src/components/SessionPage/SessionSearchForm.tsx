@@ -57,7 +57,6 @@ export const SessionSearchForm = () => {
             isLiked={user.isLiked}
             onLike={() =>
               toggleLike(user.userId, user.isLiked, () => {
-                // 바로 반영
                 handleSearch();
               })
             }

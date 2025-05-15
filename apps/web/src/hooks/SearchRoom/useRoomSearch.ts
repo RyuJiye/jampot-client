@@ -1,17 +1,21 @@
-import { useCallback, useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import {
-  SessionList,
   RoomProfile,
+  SearchRoomList,
 } from '@web/components/SearchRoomPage/SearchRoomList';
 import { SESSION_LABEL_TO_VALUE } from '@web/constants/onboarding';
 
-export const useRoomSearch = () => {
+type Props = {
+  isPlayerLocked?: boolean;
+};
+
+export const useRoomSearch = ({ isPlayerLocked }: Props) => {
   const [inputValue, setInputValue] = useState('');
   const [selectedSessions, setSelectedSessions] = useState<string[]>([]);
   const [selectedGenres, setSelectedGenres] = useState<string[]>([]);
-  const [userList, setUserList] = useState<RoomProfile[]>([]);
+  const [roomList, setRoomList] = useState<RoomProfile[]>([]);
 
-  const handleSearch = useCallback(async () => {
+  const handleSearch = async () => {
     const sessionQuery = selectedSessions
       .filter(
         (label): label is keyof typeof SESSION_LABEL_TO_VALUE =>
@@ -19,18 +23,18 @@ export const useRoomSearch = () => {
       )
       .map((label) => SESSION_LABEL_TO_VALUE[label]);
 
-    const result = await SessionList({
-      isPlayerLocked: true,
+    const result = await SearchRoomList({
+      isPlayerLocked,
       sessionList: sessionQuery,
       genreList: selectedGenres,
     });
 
-    setUserList(result);
-  }, [inputValue, selectedSessions, selectedGenres]);
+    setRoomList(result);
+  };
 
   useEffect(() => {
     handleSearch();
-  }, [handleSearch]);
+  }, [inputValue, selectedSessions, selectedGenres, isPlayerLocked]);
 
   return {
     inputValue,
@@ -39,7 +43,7 @@ export const useRoomSearch = () => {
     setSelectedSessions,
     selectedGenres,
     setSelectedGenres,
-    userList,
+    roomList,
     handleSearch,
   };
 };

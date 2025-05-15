@@ -1,11 +1,24 @@
 import styled from '@emotion/styled';
 import { ButtonTextField, Dropdown, RoomCard } from '@repo/ui';
 import { GENRES, SESSION_LABELS } from '@web/constants/onboarding';
+import { useState } from 'react';
 import { useRoomSearch } from '@web/hooks/SearchRoom/useRoomSearch';
-
 import { useToggleLike } from '@web/hooks/Session/useToggleLike';
 
+const LOCK_OPTIONS = [
+  { label: '잠금', value: 'locked' },
+  { label: '열림', value: 'unlocked' },
+];
+
 export const SearchRoomForm = () => {
+  const [isLockedList, setIsLockedList] = useState<string[]>([]);
+
+  const toBoolean = (v: string[]): boolean | undefined => {
+    if (v.includes('잠금')) return false;
+    if (v.includes('열림')) return true;
+    return undefined;
+  };
+
   const {
     inputValue,
     setInputValue,
@@ -13,11 +26,13 @@ export const SearchRoomForm = () => {
     setSelectedSessions,
     selectedGenres,
     setSelectedGenres,
-    userList,
+    roomList,
     handleSearch,
-  } = useRoomSearch();
+  } = useRoomSearch({ isPlayerLocked: toBoolean(isLockedList) });
 
   const { toggleLike } = useToggleLike();
+  console.log('roomList', roomList);
+
   return (
     <>
       <FormHeader>
@@ -31,6 +46,13 @@ export const SearchRoomForm = () => {
           />
         </SearchContainer>
         <Dropdowns>
+          <Dropdown
+            title="잠금 / 열림"
+            contents={LOCK_OPTIONS.map((opt) => opt.label)}
+            selectedContents={isLockedList}
+            setSelectedContents={setIsLockedList}
+          />
+
           <Dropdown
             title="세션 선택"
             contents={SESSION_LABELS}
@@ -47,7 +69,7 @@ export const SearchRoomForm = () => {
       </FormHeader>
 
       <FormContent>
-        {userList.map((user) => (
+        {roomList.map((user) => (
           <RoomCard
             key={user.playRoomId}
             imgUrl={user.imgUrl}

@@ -10,28 +10,42 @@ export type RoomProfile = {
   isLiked: boolean;
 };
 
-type SearchRoomListProps = {
-  roomList: RoomProfile[];
+type RoomListResponse = {
+  playRoomProfileList: RoomProfile[];
 };
 
-export const SessionList = async ({
+export const SearchRoomList = async ({
   isPlayerLocked,
   sessionList,
   genreList,
 }: {
-  isPlayerLocked: boolean;
+  isPlayerLocked?: boolean;
   sessionList: string[];
   genreList: string[];
 }): Promise<RoomProfile[]> => {
-  const res = await fetcher.get<RoomProfile[]>('/search/play-rooms/condition', {
-    params: {
-      isPlayerLocked,
-      sessionList,
-      genreList,
-    },
-    paramsSerializer: (params) =>
-      qs.stringify(params, { arrayFormat: 'comma' }),
-  });
+  //const isEmpty = sessionList.length === 0 && genreList.length === 0;
 
-  return res;
+  const res = await fetcher.get<RoomListResponse>(
+    '/search/play-rooms/condition',
+    {
+      params: {
+        isPlayerLocked,
+        ...(sessionList.length > 0 && { sessionList }),
+        ...(genreList.length > 0 && { genreList }),
+      },
+      paramsSerializer: (params) =>
+        qs.stringify(params, { arrayFormat: 'comma' }),
+    }
+  );
+  const params = {
+    isPlayerLocked,
+    ...(sessionList.length > 0 && { sessionList }),
+    ...(genreList.length > 0 && { genreList }),
+  };
+
+  console.log('search params:', params);
+
+  console.log('API raw response:', res);
+
+  return res.playRoomProfileList ?? [];
 };

@@ -1,4 +1,6 @@
 import { Tab } from '@repo/ui';
+import { SavedRoomList } from '@web/components/SearchRoomPage/SavedRoomList';
+import { SearchRoomForm } from '@web/components/SearchRoomPage/SearchRoomForm';
 import { useState } from 'react';
 
 export const SearchRoomBoard = () => {
@@ -15,8 +17,8 @@ export const SearchRoomBoard = () => {
         onChange={setActiveTab}
       />
 
-      {activeTab === 'search' && <div>세션 검색</div>}
-      {activeTab === 'liked' && <div>세션 찜 리스트 보기</div>}
+      {activeTab === 'search' && <SearchRoomForm />}
+      {activeTab === 'liked' && <SavedRoomList />}
     </>
   );
 };

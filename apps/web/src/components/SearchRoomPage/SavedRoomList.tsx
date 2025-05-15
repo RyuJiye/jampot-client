@@ -1,22 +1,23 @@
 import { RoomCard } from '@repo/ui';
 import { useLikedRooms } from '@web/hooks/SearchRoom/useLikedRooms';
+import { useToggleLike } from '@web/hooks/Session/useToggleLike';
 
 export const SavedRoomList = () => {
-  const { userList, removeUserFromList } = useLikedRooms();
+  const { roomList, removeRoomFromList } = useLikedRooms();
   const { toggleLike } = useToggleLike();
   return (
     <div style={{ display: 'flex', flexWrap: 'wrap', gap: '16px' }}>
-      {userList.map((user) => (
+      {roomList.map((room) => (
         <RoomCard
-          key={user.playRoomId}
-          imgUrl={user.imgUrl}
-          name={user.name}
-          genre={user.genre}
-          remainSessions={user.remainSessions}
-          isLiked={user.isLiked}
+          key={room.playRoomId}
+          imgUrl={room.imgUrl}
+          name={room.name}
+          genre={room.genre}
+          remainSessions={room.remainSessions}
+          isLiked={room.isLiked}
           onLike={() =>
-            toggleLike(user.userId, user.isLiked, () => {
-              removeUserFromList(user.userId);
+            toggleLike(room.playRoomId, room.isLiked, () => {
+              removeRoomFromList(room.playRoomId);
             })
           }
         />

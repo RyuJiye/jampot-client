@@ -2,8 +2,8 @@ import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 import { Icon } from '@repo/ui';
 import { NAVIGATION_MENU } from '@web/constants/navigation';
-import { useState } from 'react';
-//import { useNavigate } from 'react-router-dom';
+//import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 interface MenuButtonProps {
   filled?: boolean;
@@ -13,8 +13,8 @@ interface MenuButtonProps {
 }
 
 export const Header = () => {
-  const [loggedIn, setLoggedIn] = useState(false);
-  //const navigate = useNavigate();
+  //const [loggedIn, setLoggedIn] = useState(false);
+  const navigate = useNavigate();
 
   return (
     <Headers>
@@ -24,10 +24,7 @@ export const Header = () => {
 
       <Menu>
         {NAVIGATION_MENU.map((item) => (
-          <MenuButton
-            key={item.menu}
-            onClick={() => setLoggedIn((prev) => !prev)}
-          >
+          <MenuButton key={item.menu} onClick={() => navigate(item.path)}>
             {item.menu}
           </MenuButton>
         ))}

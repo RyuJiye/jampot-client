@@ -4,19 +4,19 @@ import { Chip } from '../Chip/Chip';
 import { Icon } from '../Icon/Icon';
 
 export type RoomCardProps = React.ComponentProps<'div'> & {
-  imageUrl: string;
-  genre: string;
-  remainingSessions: string[];
-  roomName: string;
+  imgUrl: string;
+  genre: string[];
+  remainSessions: string[];
+  name: string;
   isLiked: boolean;
   onLike: () => void;
 };
 
 export const RoomCard = ({
-  imageUrl,
+  imgUrl,
   genre,
-  remainingSessions,
-  roomName,
+  remainSessions,
+  name,
   isLiked,
   onLike,
 }: RoomCardProps) => {
@@ -24,7 +24,7 @@ export const RoomCard = ({
 
   return (
     <CardContainer>
-      <ImageContainer imageUrl={imageUrl}>
+      <ImageContainer imgUrl={imgUrl}>
         <LikeButton onClick={onLike}>
           <Icon
             name="heart"
@@ -32,18 +32,18 @@ export const RoomCard = ({
             fill={isLiked ? theme.palette.yellow500 : theme.palette.white}
           />
         </LikeButton>
-        <RoomName>
-          <Chip colorTheme={'yellow'}>{roomName}</Chip>
-        </RoomName>
+        <Name>
+          <Chip colorTheme={'yellow'}>{name}</Chip>
+        </Name>
       </ImageContainer>
       <RoomInfo>
         <div>
           <span className="label">장르: </span>
-          <span className="text">{genre}</span>
+          <span className="text">{genre.join(', ')}</span>
         </div>
         <div>
           <span className="label">잔여 세션: </span>
-          <span className="text">{remainingSessions.join(', ')}</span>
+          <span className="text">{remainSessions.join(', ')}</span>
         </div>
       </RoomInfo>
     </CardContainer>
@@ -56,7 +56,7 @@ const CardContainer = styled.div`
   width: 270px;
   height: 254px;
 `;
-const ImageContainer = styled.div<{ imageUrl: string }>`
+const ImageContainer = styled.div<{ imgUrl: string }>`
   position: relative;
   width: 100%;
   height: 154px;
@@ -67,7 +67,10 @@ const ImageContainer = styled.div<{ imageUrl: string }>`
   flex-direction: column;
   justify-content: space-between;
   align-items: flex-end;
-  background-image: url(${({ imageUrl }) => imageUrl});
+  background-image: url(${({ imgUrl }) => imgUrl});
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
 `;
 
 const LikeButton = styled.button`
@@ -79,7 +82,7 @@ const LikeButton = styled.button`
   z-index: 1;
 `;
 
-const RoomName = styled.div`
+const Name = styled.div`
   position: absolute;
   bottom: 12px;
   right: 20px;

@@ -1,11 +1,14 @@
 import styled from '@emotion/styled';
 import { Header } from '@web/components/common/Header';
+import { SearchRoomBoard } from '@web/components/SearchRoomPage/SearchRoomBoard';
 
 export const SearchRoomPage = () => {
   return (
     <>
       <Header />
-      <BoardContainer></BoardContainer>
+      <BoardContainer>
+        <SearchRoomBoard />
+      </BoardContainer>
     </>
   );
 };

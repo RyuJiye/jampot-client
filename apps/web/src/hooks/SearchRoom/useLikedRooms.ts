@@ -4,18 +4,19 @@ import { useEffect, useState } from 'react';
 
 export const useLikedRooms = () => {
   const [roomList, setRoomList] = useState<RoomProfile[]>([]);
-  const fetchLikedRoom = async () => {
-    try {
-      const res = await fetcher.get<{ targetRoomProfileList: RoomProfile[] }>(
-        '/search/play-rooms/liked'
-      );
-      setRoomList(res.targetRoomProfileList);
-    } catch (e) {
-      console.error(e);
-    }
-  };
+
   useEffect(() => {
-    fetchLikedRoom();
+    const fetchLikedRooms = async () => {
+      try {
+        const res = await fetcher.get<{ playRoomProfileList: RoomProfile[] }>(
+          '/search/play-rooms/liked'
+        );
+
+        setRoomList(res.playRoomProfileList);
+      } catch (error) {}
+    };
+
+    fetchLikedRooms();
   }, []);
 
   const removeRoomFromList = (playRoomId: number) => {

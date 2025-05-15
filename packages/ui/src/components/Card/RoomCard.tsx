@@ -39,7 +39,7 @@ export const RoomCard = ({
       <RoomInfo>
         <div>
           <span className="label">장르: </span>
-          <span className="text">{genre}</span>
+          <span className="text">{genre.join(', ')}</span>
         </div>
         <div>
           <span className="label">잔여 세션: </span>
@@ -68,6 +68,9 @@ const ImageContainer = styled.div<{ imgUrl: string }>`
   justify-content: space-between;
   align-items: flex-end;
   background-image: url(${({ imgUrl }) => imgUrl});
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
 `;
 
 const LikeButton = styled.button`

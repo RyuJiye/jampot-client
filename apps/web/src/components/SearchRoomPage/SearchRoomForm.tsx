@@ -3,7 +3,7 @@ import { ButtonTextField, Dropdown, RoomCard } from '@repo/ui';
 import { GENRES, SESSION_LABELS } from '@web/constants/onboarding';
 import { useState } from 'react';
 import { useRoomSearch } from '@web/hooks/SearchRoom/useRoomSearch';
-import { useToggleLike } from '@web/hooks/Session/useToggleLike';
+import { useToggleLike } from '@web/hooks/SearchRoom/useToggleLike';
 
 const LOCK_OPTIONS = [
   { label: '잠금', value: 'locked' },
@@ -69,16 +69,16 @@ export const SearchRoomForm = () => {
       </FormHeader>
 
       <FormContent>
-        {roomList.map((user) => (
+        {roomList.map((room) => (
           <RoomCard
-            key={user.playRoomId}
-            imgUrl={user.imgUrl}
-            name={user.name}
-            genre={user.genre}
-            remainSessions={user.remainSessions}
-            isLiked={user.isLiked}
+            key={room.playRoomId}
+            imgUrl={room.imgUrl}
+            name={room.name}
+            genre={room.genre}
+            remainSessions={room.remainSessions}
+            isLiked={room.isLiked}
             onLike={() =>
-              toggleLike(user.playRoomId, user.isLiked, () => {
+              toggleLike(room.playRoomId, room.isLiked, () => {
                 handleSearch();
               })
             }

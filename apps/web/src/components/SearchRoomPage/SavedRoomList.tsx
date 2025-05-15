@@ -1,6 +1,6 @@
 import { RoomCard } from '@repo/ui';
 import { useLikedRooms } from '@web/hooks/SearchRoom/useLikedRooms';
-import { useToggleLike } from '@web/hooks/Session/useToggleLike';
+import { useToggleLike } from '@web/hooks/SearchRoom/useToggleLike';
 
 export const SavedRoomList = () => {
   const { roomList, removeRoomFromList } = useLikedRooms();

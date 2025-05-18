@@ -44,7 +44,7 @@ export const ProfileInfo = ({
 
     try {
       const res = await fetcher.post<{ profileAudioUrl: string }>(
-        '/user/upload-profile-audio',
+        '/users/upload-profile-audio',
         formData,
         {
           headers: {

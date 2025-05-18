@@ -30,7 +30,7 @@ export const NicknameForm = ({
 
     try {
       const res = await fetcher.post<{ profileImageUrl: string }>(
-        '/user/upload-profile-img',
+        '/users/upload-profile-img',
         formData,
         {
           headers: {
@@ -58,7 +58,7 @@ export const NicknameForm = ({
                 alt="프로필 이미지"
               />
             ) : (
-              <Icon name="profileImage" size={100} />
+              <Icon name="person" size={100} fill="#ffe58a" />
             )}
           </label>
           <input

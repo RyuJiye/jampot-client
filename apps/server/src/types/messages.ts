@@ -9,7 +9,12 @@ export type Message =
   | {
       type: 'join';
       roomId: string;
-      userInfo: { id: string; name: string; role: string };
+      userInfo: {
+        id: string;
+        name: string;
+        role: string;
+        profileImageUrl?: string;
+      };
     }
   | { type: 'getRouterRtpCapabilities' }
   | { type: 'createTransport' }
@@ -26,10 +31,7 @@ export type Message =
       type: 'connectRecvTransport';
       dtlsParameters: DtlsParameters;
     }
-
   | {
       type: 'consume';
       rtpCapabilities: RtpCapabilities;
     };
-
-

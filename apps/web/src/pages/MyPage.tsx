@@ -31,7 +31,7 @@ export const MyPage = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const res = await fetcher.get<MypageResponse>('/user/mypage');
+        const res = await fetcher.get<MypageResponse>('/users/mypage');
         setNickName(res.nickName);
         setSelfIntroduction(res.selfIntroduction);
         setProfileImgUrl(res.profileImgUrl);
@@ -49,7 +49,7 @@ export const MyPage = () => {
 
   const handleSave = async () => {
     try {
-      await fetcher.put('/user/mypage/edit', {
+      await fetcher.put('/users/mypage/edit', {
         nickName,
         selfIntroduction,
         profileImageUrl: profileImgUrl,

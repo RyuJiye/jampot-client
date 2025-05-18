@@ -10,7 +10,12 @@ export async function handleJoin(
   ws: ExtendedWebSocket,
   data: {
     roomId: string;
-    userInfo: { id: string; name: string; role: string };
+    userInfo: {
+      id: string;
+      name: string;
+      role: string;
+      profileImageUrl?: string;
+    };
   }
 ) {
   const { roomId, userInfo } = data;
@@ -24,6 +29,7 @@ export async function handleJoin(
     ws,
     name: userInfo.name,
     role: userInfo.role,
+    profileImageUrl: userInfo.profileImageUrl,
   });
 
   const summary = room.peerManager.getAllSummaries();

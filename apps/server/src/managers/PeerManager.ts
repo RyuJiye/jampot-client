@@ -1,6 +1,11 @@
 import type { WebSocket as WsSocket } from 'ws';
 
-type Peer = { ws: WsSocket; name: string; role: string };
+type Peer = {
+  ws: WsSocket;
+  name: string;
+  role: string;
+  profileImageUrl?: string;
+};
 
 export class PeerManager {
   private peers = new Map<string, Peer>();
@@ -18,6 +23,7 @@ export class PeerManager {
       id,
       name: p.name,
       role: p.role,
+      profileImageUrl: p.profileImageUrl,
     }));
   }
 

@@ -17,7 +17,7 @@ export const AccountInfo = ({
 }: AccountInfoProps) => {
   const handleLogout = async () => {
     try {
-      await fetcher.post('/user/logout');
+      await fetcher.post('/users/logout');
       window.location.href = '/';
     } catch (error) {
       console.error('로그아웃 실패:', error);
@@ -30,7 +30,7 @@ export const AccountInfo = ({
 
     if (confirmDelete) {
       try {
-        await fetcher.delete('/user/delete');
+        await fetcher.delete('/users/delete');
         window.location.href = '/';
       } catch (error) {
         console.error('회원 탈퇴 실패:', error);

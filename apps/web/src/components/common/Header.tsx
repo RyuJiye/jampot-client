@@ -29,7 +29,7 @@ export const Header = () => {
           </MenuButton>
         ))}
 
-        <UserButton>
+        <UserButton onClick={() => navigate('/mypage')}>
           <Icon name="person" size={18} />
         </UserButton>
       </Menu>

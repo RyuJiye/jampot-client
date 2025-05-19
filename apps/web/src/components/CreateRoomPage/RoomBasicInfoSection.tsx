@@ -1,15 +1,22 @@
 import styled from '@emotion/styled';
-import { fetcher } from '@repo/api';
 import { Icon, TextField, Toggle } from '@repo/ui';
 import { useState } from 'react';
 
-type RoomNameFormProps = {
+type RoomBasicInfoSectionProps = {
   roomName: string;
   setRoomName: (val: string) => void;
   selfIntroduction: string;
   setSelfIntroduction: (val: string) => void;
   profileImgUrl: string;
   setProfileImgUrl: (val: string) => void;
+  playerPW: string;
+  setPlayerPW: (val: string) => void;
+  audiencePW: string;
+  setAudiencePW: (val: string) => void;
+  isPlayerLocking: boolean;
+  setIsPlayerLocking: (val: boolean) => void;
+  isAudienceLocking: boolean;
+  setIsAudienceLocking: (val: boolean) => void;
 };
 
 export const RoomBasicInfoSection = ({
@@ -19,45 +26,35 @@ export const RoomBasicInfoSection = ({
   setSelfIntroduction,
   profileImgUrl,
   setProfileImgUrl,
-}: RoomNameFormProps) => {
+  playerPW,
+  setPlayerPW,
+  audiencePW,
+  setAudiencePW,
+  isPlayerLocking,
+  setIsPlayerLocking,
+  isAudienceLocking,
+  setIsAudienceLocking,
+}: RoomBasicInfoSectionProps) => {
   const [imageVersion, setImageVersion] = useState(Date.now());
-  const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+
+  const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
 
-    const formData = new FormData();
-    formData.append('file', file);
-
-    try {
-      const res = await fetcher.post<{ profileImageUrl: string }>(
-        '/users/upload-profile-img',
-        formData,
-        {
-          headers: {
-            'Content-Type': 'multipart/form-data',
-          },
-        }
-      );
-
-      setProfileImgUrl(res.profileImageUrl);
-      setImageVersion(Date.now());
-    } catch (error) {
-      alert('이미지 업로드에 실패했습니다.');
-      console.error(error);
-    }
+    const localPreviewUrl = URL.createObjectURL(file);
+    setProfileImgUrl(localPreviewUrl);
+    setImageVersion(Date.now());
   };
+
   return (
     <>
       <FormContainer>
         <ImageUploadWrapper>
           <label htmlFor="profile-image-upload">
             {profileImgUrl ? (
-              <ProfileImage
-                src={`${profileImgUrl}?v=${imageVersion}`}
-                alt="프로필 이미지"
-              />
+              <ProfileImage src={profileImgUrl} />
             ) : (
-              <Icon name="person" size={100} fill="#ffe58a" />
+              <Icon name="upload" size={100} />
             )}
           </label>
           <input
@@ -71,39 +68,47 @@ export const RoomBasicInfoSection = ({
 
         <RoomNameInput
           type="text"
-          placeholder="닉네임"
-          defaultValue={roomName}
+          placeholder="합주실 이름을 입력해주세요"
+          value={roomName}
           onChange={(e) => setRoomName(e.target.value)}
         />
         <IntroduceInput
-          placeholder="자기소개입력하기"
-          defaultValue={selfIntroduction}
+          placeholder="합주실 소개 입력"
+          value={selfIntroduction}
           onChange={(e) => setSelfIntroduction(e.target.value)}
         />
       </FormContainer>
+
       <AccessContainer>
         <AccessTopContainer>
-          <p>관중 입장 허용</p>
+          <p>관중 입장 비밀번호 설정</p>
           <Toggle
-            checked={false}
-            onChange={function (): void {
-              throw new Error('Function not implemented.');
-            }}
+            checked={isAudienceLocking}
+            onChange={() => setIsAudienceLocking(!isAudienceLocking)}
           />
         </AccessTopContainer>
-        <TextField />
+        <TextField
+          value={audiencePW}
+          width="100%"
+          onChange={(e) => setAudiencePW(e.target.value)}
+          placeholder="관중 비밀번호"
+        />
       </AccessContainer>
+
       <AccessContainer>
         <AccessTopContainer>
-          <p>연주자 비번 유무</p>
+          <p>연주자 입장 비밀번호 설정</p>
           <Toggle
-            checked={false}
-            onChange={function (): void {
-              throw new Error('Function not implemented.');
-            }}
+            checked={isPlayerLocking}
+            onChange={() => setIsPlayerLocking(!isPlayerLocking)}
           />
         </AccessTopContainer>
-        <TextField />
+        <TextField
+          value={playerPW}
+          width="100%"
+          onChange={(e) => setPlayerPW(e.target.value)}
+          placeholder="연주자 비밀번호"
+        />
       </AccessContainer>
     </>
   );
@@ -142,7 +147,7 @@ const RoomNameInput = styled.input`
 const IntroduceInput = styled.textarea`
   width: 100%;
   margin-top: 6px;
-  margin-bottom: 24px;
+  margin-bottom: 12px;
   padding: 10px;
   color: ${({ theme }) => theme.palette.gray700};
   ${({ theme }) => theme.typo.label1r};
@@ -169,4 +174,7 @@ const AccessTopContainer = styled.div`
   flex-direction: row;
   justify-content: space-between;
   width: 100%;
+  margin-bottom: 10px;
+  ${({ theme }) => theme.typo.label1m};
+  color: ${({ theme }) => theme.palette.gray700};
 `;

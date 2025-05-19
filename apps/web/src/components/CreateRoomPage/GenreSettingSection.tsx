@@ -1,21 +1,26 @@
 import styled from '@emotion/styled';
 import { Dropdown } from '@repo/ui';
 
-export const GenreSettingSection = () => {
+type GenreSettingSectionProps = {
+  selectedContents: string[];
+  setSelectedContents: (val: string[]) => void;
+};
+
+export const GenreSettingSection = ({
+  selectedContents,
+  setSelectedContents,
+}: GenreSettingSectionProps) => {
   return (
-    <>
-      <GenreContainer>
-        <p>장르 정하기</p>
-        <Dropdown
-          title={'Category'}
-          contents={[]}
-          selectedContents={[]}
-          setSelectedContents={function (selected: string[]): void {
-            throw new Error('Function not implemented.');
-          }}
-        />
-      </GenreContainer>
-    </>
+    <GenreContainer>
+      <p>장르 정하기</p>
+      <Dropdown
+        title="Category"
+        contents={['ROCK', 'JAZZ', 'POP', 'JPOP']}
+        selectedContents={selectedContents}
+        setSelectedContents={setSelectedContents}
+        width="100%"
+      />
+    </GenreContainer>
   );
 };
 
@@ -26,4 +31,6 @@ const GenreContainer = styled.div`
   justify-content: center;
   align-items: flex-start;
   gap: 12px;
+  ${({ theme }) => theme.typo.label1m};
+  color: ${({ theme }) => theme.palette.gray700};
 `;

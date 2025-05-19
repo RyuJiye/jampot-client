@@ -1,28 +1,40 @@
-import {
-  CreateRoomRequest,
-  DEFAULT_SESSION_TYPES,
-} from '@web/models/createRoom';
 import { useState } from 'react';
 
-export const useCreateRoomForm = () => {
-  const [form, setForm] = useState<CreateRoomRequest>({
-    name: '',
-    description: '',
-    imageUrl: '',
-    playerPW: '',
-    audiencePW: '',
-    isPlayerLocking: false,
-    isAudienceLocking: false,
-    sessionMaxPairs: DEFAULT_SESSION_TYPES.map((session) => ({
-      session,
-      maxParticipants: 1,
-    })),
-    genreList: [],
-  });
+export type SessionMaxPair = {
+  session: string;
+  maxParticipants: number;
+};
 
-  const updateField = <K extends keyof CreateRoomRequest>(
+export type CreateRoomFormState = {
+  name: string;
+  description: string;
+  imageUrl: string;
+  playerPW: string;
+  audiencePW: string;
+  isPlayerLocking: boolean;
+  isAudienceLocking: boolean;
+  sessionMaxPairs: SessionMaxPair[];
+  genreList: string[];
+};
+
+const initialForm: CreateRoomFormState = {
+  name: '',
+  description: '',
+  imageUrl: '',
+  playerPW: '',
+  audiencePW: '',
+  isPlayerLocking: false,
+  isAudienceLocking: false,
+  sessionMaxPairs: [],
+  genreList: [],
+};
+
+export const useCreateRoomForm = () => {
+  const [form, setForm] = useState<CreateRoomFormState>(initialForm);
+
+  const updateField = <K extends keyof CreateRoomFormState>(
     key: K,
-    value: CreateRoomRequest[K]
+    value: CreateRoomFormState[K]
   ) => {
     setForm((prev) => ({
       ...prev,
@@ -30,28 +42,9 @@ export const useCreateRoomForm = () => {
     }));
   };
 
-  const updateSessionCount = (session: string, count: number) => {
-    setForm((prev) => ({
-      ...prev,
-      sessionMaxPairs: prev.sessionMaxPairs.map((pair) =>
-        pair.session === session ? { ...pair, maxParticipants: count } : pair
-      ),
-    }));
-  };
-
-  const toggleGenre = (genre: string) => {
-    setForm((prev) => ({
-      ...prev,
-      genreList: prev.genreList.includes(genre)
-        ? prev.genreList.filter((g) => g !== genre)
-        : [...prev.genreList, genre],
-    }));
-  };
-
   return {
     form,
     updateField,
-    updateSessionCount,
-    toggleGenre,
+    setForm,
   };
 };

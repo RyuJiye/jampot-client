@@ -15,6 +15,7 @@ import IconKaKao from '../../assets/icons/IconKaKao.svg?react';
 import IconGoogle from '../../assets/icons/IconGoogle.svg?react';
 import IconJampot from '../../assets/icons/IconJampot.svg?react';
 import IconProfileImage from '../../assets/icons/IconProfileImage.svg?react';
+import IconUpload from '../../assets/icons/IconUpload.svg?react';
 
 export const icons = {
   add: IconAdd,
@@ -34,4 +35,5 @@ export const icons = {
   google: IconGoogle,
   jampot: IconJampot,
   profileImage: IconProfileImage,
+  upload: IconUpload,
 };

@@ -34,4 +34,5 @@ export type Message =
   | {
       type: 'consume';
       rtpCapabilities: RtpCapabilities;
-    };
+    }
+  | { type: 'disconnect'; userId: string };

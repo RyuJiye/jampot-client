@@ -92,6 +92,7 @@ export const RoomBasicInfoSection = ({
           width="100%"
           onChange={(e) => setAudiencePW(e.target.value)}
           placeholder="관중 비밀번호"
+          disabled={!isAudienceLocking}
         />
       </AccessContainer>
 
@@ -108,6 +109,7 @@ export const RoomBasicInfoSection = ({
           width="100%"
           onChange={(e) => setPlayerPW(e.target.value)}
           placeholder="연주자 비밀번호"
+          disabled={!isPlayerLocking}
         />
       </AccessContainer>
     </>

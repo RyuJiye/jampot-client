@@ -7,6 +7,7 @@ interface WebRTCOptions {
   onPeerList: (peers: { id: string; name: string; role: string }[]) => void;
   userInfo: { id: string; name: string; role: string };
   roomId: string;
+  onSocketInit?: (ws: WebSocket) => void;
 }
 
 export const startWebRTC = ({
@@ -16,11 +17,14 @@ export const startWebRTC = ({
   onPeerList,
   userInfo,
   roomId,
+  onSocketInit,
 }: WebRTCOptions) => {
   const socket = new WebSocket('ws://localhost:4000');
   let device: Device;
   let sendTransport: types.Transport;
   let recvTransport: types.Transport;
+
+  if (onSocketInit) onSocketInit(socket);
 
   socket.onopen = () => {
     onLog('WebSocket 연결됨');

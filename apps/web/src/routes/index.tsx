@@ -8,6 +8,7 @@ import { HomePage } from '@web/pages/HomePage';
 import { SessionPage } from '@web/pages/SessionPage';
 import { SearchRoomPage } from '@web/pages/SearchRoomPage';
 import { CreateRoomPage } from '@web/pages/CreateRoomPage';
+import { RoomDetailPage } from '@web/pages/RoomDetailPage';
 
 export const Router = () => {
   return (
@@ -21,6 +22,7 @@ export const Router = () => {
         <Route path="/session" element={<SessionPage />} />
         <Route path="/search-room" element={<SearchRoomPage />} />
         <Route path="/create-room" element={<CreateRoomPage />} />
+        <Route path="/room/:roomId" element={<RoomDetailPage />} />
       </Routes>
     </BrowserRouter>
   );

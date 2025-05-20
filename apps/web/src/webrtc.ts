@@ -37,10 +37,16 @@ export const startWebRTC = ({
 
   socket.onmessage = async (event) => {
     const message = JSON.parse(event.data);
-    onLog(`메시지 수신: ${message.type}`);
 
     if (message.type === 'peerList') {
-      onPeerList(message.data);
+      const rawPeers: { id: string; name: string; role: string }[] =
+        message.data;
+
+      const uniquePeers = Array.from(
+        new Map(rawPeers.map((p) => [p.id, p])).values()
+      );
+
+      onPeerList(uniquePeers);
     } else if (message.type === 'routerRtpCapabilities') {
       device = new Device();
       await device.load({ routerRtpCapabilities: message.data });

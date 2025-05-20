@@ -7,6 +7,7 @@ import { MyPage } from '@web/pages/MyPage';
 import { HomePage } from '@web/pages/HomePage';
 import { SessionPage } from '@web/pages/SessionPage';
 import { SearchRoomPage } from '@web/pages/SearchRoomPage';
+import { CreateRoomPage } from '@web/pages/CreateRoomPage';
 
 export const Router = () => {
   return (
@@ -19,6 +20,7 @@ export const Router = () => {
         <Route path="/home" element={<HomePage />} />
         <Route path="/session" element={<SessionPage />} />
         <Route path="/search-room" element={<SearchRoomPage />} />
+        <Route path="/create-room" element={<CreateRoomPage />} />
       </Routes>
     </BrowserRouter>
   );

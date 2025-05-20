@@ -1,8 +1,11 @@
+import { Header } from '@web/components/common/Header';
+
 export const HomePage = () => {
   const isElectron = typeof window !== 'undefined' && !!window.electronAPI;
 
   return (
     <div>
+      <Header />
       <h1>Home Page</h1>
 
       {!isElectron && <div></div>}

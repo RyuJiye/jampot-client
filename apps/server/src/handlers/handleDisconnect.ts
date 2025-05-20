@@ -13,4 +13,7 @@ export function handleDisconnect(ws: ExtendedWebSocket) {
   room.transportManager.delete(ws.userId);
   room.peerManager.remove(ws.userId);
   room.producerManager.delete(ws.userId);
+
+  const summary = room.peerManager.getAllSummaries();
+  room.peerManager.broadcast('peerList', summary);
 }

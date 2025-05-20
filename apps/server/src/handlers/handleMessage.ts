@@ -3,6 +3,7 @@ import { handleConnectTransport } from '@server/handlers/handleConnectTransport'
 import { handleConsume } from '@server/handlers/handleConsume';
 import { handleCreateRecvTransport } from '@server/handlers/handleCreateRecvTransport';
 import { handleCreateTransport } from '@server/handlers/handleCreateTransport';
+import { handleDisconnect } from '@server/handlers/handleDisconnect';
 import { handleGetRouterRtpCapabilities } from '@server/handlers/handleGetRouterRtpCapabilities';
 import { handleJoin } from '@server/handlers/handleJoin';
 import { handleProduce } from '@server/handlers/handleProduce';
@@ -27,5 +28,7 @@ export async function handleMessage(ws: WsSocket, data: Message) {
       return handleConnectRecvTransport(ws, data.dtlsParameters);
     case 'consume':
       return handleConsume(ws, data);
+    case 'disconnect':
+      return handleDisconnect(ws);
   }
 }

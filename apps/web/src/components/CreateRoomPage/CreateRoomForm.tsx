@@ -25,7 +25,7 @@ export const CreateRoomForm = () => {
 
   return (
     <>
-      <CreateRooomContainer>
+      <CreateRoomContainer>
         <RoomBasicInfoSection
           roomName={form.name}
           setRoomName={(val) => updateField('name', val)}
@@ -58,12 +58,12 @@ export const CreateRoomForm = () => {
         >
           합주실 생성하기
         </Button>
-      </CreateRooomContainer>
+      </CreateRoomContainer>
     </>
   );
 };
 
-const CreateRooomContainer = styled.div`
+const CreateRoomContainer = styled.div`
   display: flex;
   padding: 60px;
   flex-direction: column;

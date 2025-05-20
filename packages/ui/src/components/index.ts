@@ -13,3 +13,4 @@ export { SessionCard } from './Card/SessionCard';
 export { RoomCard } from './Card/RoomCard';
 export { Tab } from './Tab/Tab';
 export { ChatCard } from './Chat/ChatCard';
+export { ParticipantCard } from './Card/ParticipantCard';

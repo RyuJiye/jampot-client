@@ -4,6 +4,7 @@ import { GENRES, SESSION_LABELS } from '@web/constants/onboarding';
 import { useState } from 'react';
 import { useRoomSearch } from '@web/hooks/SearchRoom/useRoomSearch';
 import { useToggleLike } from '@web/hooks/SearchRoom/useToggleLike';
+import { useNavigate } from 'react-router-dom';
 
 const LOCK_OPTIONS = [
   { label: '잠금', value: 'locked' },
@@ -31,7 +32,7 @@ export const SearchRoomForm = () => {
   } = useRoomSearch({ isPlayerLocked: toBoolean(isLockedList) });
 
   const { toggleLike } = useToggleLike();
-  console.log('roomList', roomList);
+  const navigate = useNavigate();
 
   return (
     <>
@@ -77,6 +78,7 @@ export const SearchRoomForm = () => {
             genre={room.genre}
             remainSessions={room.remainSessions}
             isLiked={room.isLiked}
+            onClick={() => navigate(`/room/${room.playRoomId}`)}
             onLike={() =>
               toggleLike(room.playRoomId, room.isLiked, () => {
                 handleSearch();

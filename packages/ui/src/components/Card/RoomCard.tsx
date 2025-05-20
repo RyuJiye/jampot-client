@@ -10,6 +10,7 @@ export type RoomCardProps = React.ComponentProps<'div'> & {
   name: string;
   isLiked: boolean;
   onLike: () => void;
+  onClick?: () => void;
 };
 
 export const RoomCard = ({
@@ -19,11 +20,12 @@ export const RoomCard = ({
   name,
   isLiked,
   onLike,
+  onClick,
 }: RoomCardProps) => {
   const theme = useTheme();
 
   return (
-    <CardContainer>
+  <CardContainer onClick={onClick}>
       <ImageContainer imgUrl={imgUrl}>
         <LikeButton onClick={onLike}>
           <Icon

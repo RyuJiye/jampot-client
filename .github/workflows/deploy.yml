@@ -40,7 +40,13 @@ jobs:
           username: ${{ secrets.EC2_USERNAME }}
           key: ${{ secrets.EC2_KEY }}
           script: |
+            set -e
             cd /home/ubuntu/apps/server
+            echo "Installing dependencies..."
             npm install --legacy-peer-deps
-            npm run build
+            echo "Building TypeScript project..."
+            npx tsc --project tsconfig.json
+            echo "Running tsc-alias to replace path aliases..."
+            npx tsc-alias -p tsconfig.json
+            echo "Restarting mediasoup with PM2..."
             pm2 restart mediasoup || pm2 start dist/index.js --name mediasoup --interpreter node --interpreter-args="--input-type=module"

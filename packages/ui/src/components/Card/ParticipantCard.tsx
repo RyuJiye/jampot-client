@@ -61,7 +61,8 @@ const CardContainer = styled.div<{ highlight?: boolean }>`
   display: flex;
   flex-direction: column;
   width: 273px;
-  padding: 12px;
+  height: 240px;
+  padding: 18px;
   border-radius: 12px;
   background-color: ${({ highlight }) => (highlight ? '#fff9d6' : 'white')};
   box-shadow: 0 0 0 1px ${({ theme }) => theme.palette.gray200};
@@ -97,7 +98,7 @@ const TagList = styled.div`
 `;
 
 const InfoArea = styled.div`
-  margin-top: 8px;
+  margin-top: 18px;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -106,13 +107,13 @@ const InfoArea = styled.div`
 const Name = styled.div`
   ${({ theme }) => theme.typo.body1m};
   color: ${({ theme }) => theme.palette.yellow800};
-  margin-bottom: 4px;
 `;
 
 const VolumeSlider = styled.input<{ filledRatio: number }>`
   width: 100%;
   height: 8px;
   border-radius: 5px;
+  margin-top: 20px;
   outline: none;
   -webkit-appearance: none;
 

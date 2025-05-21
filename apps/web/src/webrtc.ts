@@ -4,8 +4,20 @@ interface WebRTCOptions {
   onConnect: () => void;
   onLog: (message: string) => void;
   onTrack: (userId: string, stream: MediaStream) => void;
-  onPeerList: (peers: { id: string; name: string; role: string }[]) => void;
-  userInfo: { id: string; name: string; role: string };
+  onPeerList: (
+    peers: {
+      id: string;
+      name: string;
+      role: string;
+      profileImageUrl?: string;
+    }[]
+  ) => void;
+  userInfo: {
+    id: string;
+    name: string;
+    role: string;
+    profileImageUrl?: string;
+  };
   roomId: string;
   onSocketInit?: (ws: WebSocket) => void;
 }
@@ -37,13 +49,23 @@ export const startWebRTC = ({
 
   socket.onmessage = async (event) => {
     const message = JSON.parse(event.data);
+    onLog(`메시지 수신: ${message.type}`);
 
     if (message.type === 'peerList') {
-      const rawPeers: { id: string; name: string; role: string }[] =
-        message.data;
+      const rawPeers: {
+        id: string;
+        name: string;
+        role: string;
+        profileImageUrl?: string;
+      }[] = message.data;
+
+      const filledPeers = rawPeers.map((p) => ({
+        ...p,
+        profileImageUrl: p.profileImageUrl ?? userInfo.profileImageUrl,
+      }));
 
       const uniquePeers = Array.from(
-        new Map(rawPeers.map((p) => [p.id, p])).values()
+        new Map(filledPeers.map((p) => [`${p.name}-${p.role}`, p])).values()
       );
 
       onPeerList(uniquePeers);
@@ -63,13 +85,7 @@ export const startWebRTC = ({
       });
 
       sendTransport.on('produce', ({ kind, rtpParameters }, callback) => {
-        socket.send(
-          JSON.stringify({
-            type: 'produce',
-            kind,
-            rtpParameters,
-          })
-        );
+        socket.send(JSON.stringify({ type: 'produce', kind, rtpParameters }));
         callback({ id: 'placeholder' });
       });
 
@@ -109,12 +125,13 @@ export const startWebRTC = ({
         rtpParameters,
       });
       const stream = new MediaStream([consumer.track]);
-      console.log('[onTrack 호출됨]', senderId, stream);
       onTrack(senderId, stream);
 
       const audio = new Audio();
       audio.srcObject = stream;
-      audio.play();
+      audio.play().catch(() => {
+        console.warn('오디오 자동재생 실패');
+      });
     } else if (message.type === 'newProducer') {
       for (let i = 0; i < 3; i++) {
         setTimeout(() => {

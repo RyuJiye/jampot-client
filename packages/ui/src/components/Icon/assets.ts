@@ -17,6 +17,7 @@ import IconJampot from '../../assets/icons/IconJampot.svg?react';
 import IconProfileImage from '../../assets/icons/IconProfileImage.svg?react';
 import IconUpload from '../../assets/icons/IconUpload.svg?react';
 import IconMonth5 from '../../assets/icons/IconMonth5.svg?react';
+import IconChatRoom from '../../assets/icons/IconChatRoom.svg?react';
 
 export const icons = {
   add: IconAdd,
@@ -38,4 +39,5 @@ export const icons = {
   profileImage: IconProfileImage,
   upload: IconUpload,
   month5: IconMonth5,
+  chatroom: IconChatRoom,
 };

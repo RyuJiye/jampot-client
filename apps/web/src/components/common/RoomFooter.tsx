@@ -1,16 +1,41 @@
 import styled from '@emotion/styled';
+import { AudioSettingsModal } from '@web/components/common/AudioSettingModal';
+import { useState } from 'react';
 
 interface RoomFooterProps {
   onLeave: () => void;
+  onSelectInput: (deviceId: string) => void;
+  onSelectOutput: (deviceId: string) => void;
 }
 
-export const RoomFooter = ({ onLeave }: RoomFooterProps) => (
-  <FooterContainer>
-    <BottomZone>
-      <LeaveButton onClick={onLeave}>방 나가기</LeaveButton>
-    </BottomZone>
-  </FooterContainer>
-);
+export const RoomFooter = ({
+  onLeave,
+  onSelectInput,
+  onSelectOutput,
+}: RoomFooterProps) => {
+  const [showModal, setShowModal] = useState(false);
+
+  return (
+    <>
+      <FooterContainer>
+        <BottomZone>
+          <LeaveButton onClick={() => setShowModal(true)}>
+            오디오 설정
+          </LeaveButton>
+          <LeaveButton onClick={onLeave}>방 나가기</LeaveButton>
+        </BottomZone>
+      </FooterContainer>
+
+      {showModal && (
+        <AudioSettingsModal
+          onClose={() => setShowModal(false)}
+          onSelectInput={onSelectInput}
+          onSelectOutput={onSelectOutput}
+        />
+      )}
+    </>
+  );
+};
 
 const FooterContainer = styled.div`
   position: fixed;
@@ -23,10 +48,11 @@ const FooterContainer = styled.div`
 const BottomZone = styled.div`
   display: flex;
   justify-content: flex-end;
-  padding: 20px 42px;
+  padding: 20px 80px;
   border-top: 1px solid ${({ theme }) => theme.palette.yellow100};
   background: rgba(255, 255, 255, 0.6);
   backdrop-filter: blur(5px);
+  gap: 16px;
 `;
 
 const LeaveButton = styled.button`

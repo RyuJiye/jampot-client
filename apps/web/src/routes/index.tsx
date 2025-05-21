@@ -9,6 +9,7 @@ import { SessionPage } from '@web/pages/SessionPage';
 import { SearchRoomPage } from '@web/pages/SearchRoomPage';
 import { CreateRoomPage } from '@web/pages/CreateRoomPage';
 import { RoomDetailPage } from '@web/pages/RoomDetailPage';
+import { PlayRoomPage } from '@web/pages/PlayRoomPage';
 
 export const Router = () => {
   return (
@@ -23,6 +24,7 @@ export const Router = () => {
         <Route path="/search-room" element={<SearchRoomPage />} />
         <Route path="/create-room" element={<CreateRoomPage />} />
         <Route path="/room/:roomId" element={<RoomDetailPage />} />
+        <Route path="/play-room/:roomId" element={<PlayRoomPage />} />
       </Routes>
     </BrowserRouter>
   );

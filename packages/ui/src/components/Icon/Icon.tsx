@@ -10,11 +10,28 @@ interface IconProps extends SVGProps<SVGSVGElement> {
   fill?: string;
   stroke?: string;
   size?: number;
+  width?: number | string;
+  height?: number | string;
 }
 
 const IconContainer = styled.svg<IconProps>`
-  width: ${({ size }) => (size ? `${size}px` : 'auto')};
-  height: ${({ size }) => (size ? `${size}px` : 'auto')};
+  width: ${({ width, size }) =>
+    typeof width !== 'undefined'
+      ? typeof width === 'number'
+        ? `${width}px`
+        : width
+      : size
+        ? `${size}px`
+        : 'auto'};
+
+  height: ${({ height, size }) =>
+    typeof height !== 'undefined'
+      ? typeof height === 'number'
+        ? `${height}px`
+        : height
+      : size
+        ? `${size}px`
+        : 'auto'};
 
   path {
     fill: ${({ fill }) => fill};
@@ -22,15 +39,26 @@ const IconContainer = styled.svg<IconProps>`
   }
 `;
 
-const Icon = ({ name, fill, stroke, size, className, ...rest }: IconProps) => {
+const Icon = ({
+  name,
+  fill,
+  stroke,
+  size,
+  width,
+  height,
+  className,
+  ...rest
+}: IconProps) => {
   const SVG = icons[name];
 
   return (
     <IconContainer
       className={clsx(className)}
       fill={fill}
-      stroke={stroke || 'none'}
+      stroke={stroke}
       size={size}
+      width={width}
+      height={height}
       name={name}
       {...rest}
     >

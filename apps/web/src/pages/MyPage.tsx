@@ -5,6 +5,7 @@ import { fetcher } from '@repo/api';
 import { AccountInfo } from '@web/components/MyPage/AccountInfo';
 import { NicknameForm } from '@web/components/MyPage/NicknameForm';
 import { ProfileInfo } from '@web/components/MyPage/ProfileInfo';
+import { Header } from '@web/components/common/Header';
 
 type MypageResponse = {
   nickName: string;
@@ -66,33 +67,36 @@ export const MyPage = () => {
   };
 
   return (
-    <MyPageContainer>
-      <LeftContainer>
-        <NicknameForm
-          nickName={nickName}
-          setNickName={setNickName}
-          selfIntroduction={selfIntroduction}
-          setSelfIntroduction={setSelfIntroduction}
-          profileImgUrl={profileImgUrl}
-          setProfileImgUrl={setProfileImgUrl}
+    <>
+      <Header />
+      <MyPageContainer>
+        <LeftContainer>
+          <NicknameForm
+            nickName={nickName}
+            setNickName={setNickName}
+            selfIntroduction={selfIntroduction}
+            setSelfIntroduction={setSelfIntroduction}
+            profileImgUrl={profileImgUrl}
+            setProfileImgUrl={setProfileImgUrl}
+          />
+          <AccountInfo
+            isPublic={isPublic}
+            setIsPublic={setIsPublic}
+            calenderServiceAgreement={calenderServiceAgreement}
+            setCalenderServiceAgreement={setCalenderServiceAgreement}
+          />
+        </LeftContainer>
+        <ProfileInfo
+          sessionList={sessionList}
+          setSessionList={setSessionList}
+          genreList={genreList}
+          setGenreList={setGenreList}
+          audioFileUrl={audioFileUrl}
+          setAudioFileUrl={setAudioFileUrl}
+          onSave={handleSave}
         />
-        <AccountInfo
-          isPublic={isPublic}
-          setIsPublic={setIsPublic}
-          calenderServiceAgreement={calenderServiceAgreement}
-          setCalenderServiceAgreement={setCalenderServiceAgreement}
-        />
-      </LeftContainer>
-      <ProfileInfo
-        sessionList={sessionList}
-        setSessionList={setSessionList}
-        genreList={genreList}
-        setGenreList={setGenreList}
-        audioFileUrl={audioFileUrl}
-        setAudioFileUrl={setAudioFileUrl}
-        onSave={handleSave}
-      />
-    </MyPageContainer>
+      </MyPageContainer>
+    </>
   );
 };
 
@@ -104,6 +108,7 @@ const MyPageContainer = styled.div`
   justify-content: center;
   align-items: flex-start;
   background-color: ${({ theme }) => theme.palette.yellow50};
+  margin-top: 64px;
 `;
 
 const LeftContainer = styled.div`

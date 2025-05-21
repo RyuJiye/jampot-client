@@ -52,7 +52,7 @@ export const SessionCard = ({
 const CardContainer = styled.div`
   display: flex;
   flex-direction: column;
-  width: 270px;
+  width: 266px;
   height: 315px;
   border-radius: 16px;
   box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.13);

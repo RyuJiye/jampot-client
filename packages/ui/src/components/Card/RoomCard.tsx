@@ -25,7 +25,7 @@ export const RoomCard = ({
   const theme = useTheme();
 
   return (
-  <CardContainer onClick={onClick}>
+    <CardContainer onClick={onClick}>
       <ImageContainer imgUrl={imgUrl}>
         <LikeButton onClick={onLike}>
           <Icon
@@ -55,7 +55,7 @@ export const RoomCard = ({
 const CardContainer = styled.div`
   display: flex;
   flex-direction: column;
-  width: 270px;
+  width: 267px;
   height: 254px;
 `;
 const ImageContainer = styled.div<{ imgUrl: string }>`

@@ -23,10 +23,10 @@ export const SessionSearchForm = () => {
       <FormHeader>
         <SearchContainer>
           <ButtonTextField
-            placeholder="입력하세요"
+            placeholder="세션 이름을 입력해주세요"
             value={inputValue}
             onChange={(e) => setInputValue(e.target.value)}
-            buttonText="전송"
+            buttonText="입력"
             buttonClickHandler={handleSearch}
           />
         </SearchContainer>

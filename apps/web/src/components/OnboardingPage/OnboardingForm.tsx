@@ -49,7 +49,7 @@ export const OnboardingForm = () => {
     };
 
     fetcher
-      .post('/user/join', requestBody)
+      .post('/users/join', requestBody)
       .then((res) => {
         console.log('회원가입 성공:', res);
         window.location.href = '/home';

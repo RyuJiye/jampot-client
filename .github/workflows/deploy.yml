@@ -15,32 +15,49 @@ on:
     paths:
       - 'apps/server/**'
 
+
 jobs:
   deploy:
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      - name: Copy server files to EC2
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+
+      - name: Install dependencies
+        run: pnpm install
+
+      - name: Build project
+        run: pnpm run build --workspace-root
+
+      - name: Copy build files to EC2
         uses: appleboy/scp-action@v0.1.7
         with:
           host: ${{ secrets.EC2_HOST }}
           username: ${{ secrets.EC2_USERNAME }}
           key: ${{ secrets.EC2_KEY }}
-          source: apps/server/**
-          target: /home/ubuntu/apps/server/
-          strip_components: 2
+          source: |
+            apps/server/dist
+            apps/server/package.json
+            apps/server/pnpm-lock.yaml
+          target: /home/ubuntu/project/apps/server
 
-      - name: SSH and build/start server
+      - name: SSH and install production dependencies + start server
         uses: appleboy/ssh-action@v1.0.0
         with:
           host: ${{ secrets.EC2_HOST }}
           username: ${{ secrets.EC2_USERNAME }}
           key: ${{ secrets.EC2_KEY }}
           script: |
-            cd /home/ubuntu/apps/server
-            npm install --legacy-peer-deps
-            npm run build
-            pm2 restart mediasoup || pm2 start dist/index.js --name mediasoup --interpreter node --interpreter-args="--input-type=module"
+            cd /home/ubuntu/project/apps/server
+            pnpm install --prod
+            if pm2 list | grep -q mediasoup; then
+              pm2 restart mediasoup
+            else
+              pm2 start dist/index.js --name mediasoup
+            fi
+            pm2 save

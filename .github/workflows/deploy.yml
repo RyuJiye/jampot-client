@@ -46,7 +46,7 @@ jobs:
           username: ${{ secrets.EC2_USERNAME }}
           key: ${{ secrets.EC2_KEY }}
           source: apps/server/dist/*
-          target: /home/ubuntu/project/apps/server
+          target: /home/ubuntu/project/apps
           overwrite: true
 
       - name: SSH and install/start server

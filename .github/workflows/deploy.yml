@@ -45,11 +45,8 @@ jobs:
           host: ${{ secrets.EC2_HOST }}
           username: ${{ secrets.EC2_USERNAME }}
           key: ${{ secrets.EC2_KEY }}
-          source: |
-            apps/server/dist
-            apps/server/package.json
-            pnpm-lock.yaml
-          target: /home/ubuntu/project
+          source: "apps/server/dist/*"
+          target: /home/ubuntu/project/apps/server
 
       - name: SSH and install/start server
         uses: appleboy/ssh-action@v1.0.0

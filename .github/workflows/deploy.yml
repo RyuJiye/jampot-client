@@ -34,7 +34,7 @@ jobs:
         run: pnpm install
 
       - name: Build project
-        run: pnpm turbo run --filter=apps/server
+        run: pnpm turbo run --filter=server
 
       - name: Check if dist exists
         run: ls -al apps/server/dist

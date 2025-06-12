@@ -15,7 +15,6 @@ on:
     paths:
       - 'apps/server/**'
 
-
 jobs:
   deploy:
     runs-on: ubuntu-latest
@@ -43,8 +42,8 @@ jobs:
           source: |
             apps/server/dist
             apps/server/package.json
-            apps/server/pnpm-lock.yaml
-          target: /home/ubuntu/project/apps/server
+            pnpm-lock.yaml
+          target: /home/ubuntu/project
 
       - name: SSH and install/start server
         uses: appleboy/ssh-action@v1.0.0
@@ -54,7 +53,11 @@ jobs:
           key: ${{ secrets.EC2_KEY }}
           script: |
             cd /home/ubuntu/project/apps/server
-            pnpm install --prod
+            if ! command -v pnpm > /dev/null 2>&1; then
+              echo "pnpm not found, installing..."
+              sudo npm install -g pnpm
+            fi
+            pnpm install --prod --filter ./apps/server
             if pm2 list | grep -q mediasoup; then
               pm2 restart mediasoup
             else

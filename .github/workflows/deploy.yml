@@ -45,7 +45,7 @@ jobs:
           host: ${{ secrets.EC2_HOST }}
           username: ${{ secrets.EC2_USERNAME }}
           key: ${{ secrets.EC2_KEY }}
-          source: "apps/server/dist apps/server/package.json apps/server/tsconfig.json pnpm-lock.yaml"
+          source: "apps/server/dist/* apps/server/package.json apps/server/tsconfig.json pnpm-lock.yaml"
           target: /home/ubuntu/project/apps/server
           overwrite: true
 

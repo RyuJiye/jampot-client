@@ -37,7 +37,7 @@ jobs:
         run: pnpm turbo run build --filter=server
 
       - name: Check if dist exists
-        run: ls -al apps/server/dist
+        run: ls -la apps/server/dist
 
       - name: Copy build files to EC2
         uses: appleboy/scp-action@v0.1.7

@@ -46,7 +46,7 @@ jobs:
             apps/server/pnpm-lock.yaml
           target: /home/ubuntu/project/apps/server
 
-      - name: SSH and install production dependencies + start server
+      - name: SSH and install/start server
         uses: appleboy/ssh-action@v1.0.0
         with:
           host: ${{ secrets.EC2_HOST }}

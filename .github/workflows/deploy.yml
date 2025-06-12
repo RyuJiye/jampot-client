@@ -35,6 +35,9 @@ jobs:
 
       - name: Build server only
         run: pnpm turbo run build --filter=server
+        
+      - name: Fix path aliases with tsc-alias
+        run: pnpm exec tsc-alias -p apps/server/tsconfig.json
 
       - name: Check if dist exists
         run: ls -la apps/server/dist

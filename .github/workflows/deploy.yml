@@ -47,6 +47,7 @@ jobs:
           key: ${{ secrets.EC2_KEY }}
           source: "apps/server/dist/*"
           target: /home/ubuntu/project/apps/server
+          overwrite: true
 
       - name: SSH and install/start server
         uses: appleboy/ssh-action@v1.0.0

@@ -34,7 +34,7 @@ jobs:
         run: pnpm install
 
       - name: Build project
-        run: pnpm run build --workspace-root
+        run: pnpm run build-- --workspace-root
 
       - name: Copy build files to EC2
         uses: appleboy/scp-action@v0.1.7
